@@ -13,7 +13,19 @@
     "@babel/react"
   ],
   "plugins": [
-    "@babel/proposal-class-properties",
+    // https://babeljs.io/docs/en/babel-plugin-proposal-decorators#note-compatibility-with-babel-plugin-proposal-class-properties
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
     "@babel/proposal-object-rest-spread",
     "@babel/plugin-proposal-optional-chaining",
     "react-hot-loader/babel",

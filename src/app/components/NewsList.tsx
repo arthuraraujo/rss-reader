@@ -4,6 +4,7 @@ import Parser from 'rss-parser';
 import moment from 'moment';
 import { createUseStyles } from 'react-jss';
 import { Scrollbars } from 'react-custom-scrollbars';
+import contentStore from '../stores/content-store';
 
 export const renderThumbVerticalCustom = (props: any) => (
   <div className="rcs-vertical-thumb" {...props} />
@@ -15,6 +16,7 @@ interface NewsItem {
   link: string;
   guid: string;
   pubDate: string;
+  content: string;
 }
 
 const parser = new Parser();
@@ -35,12 +37,14 @@ function NewsItem(props: {
   pubDate: string;
   guid: string;
   selectedGuid: string;
+  content: string;
   onSelected: Function;
 }) {
-  const { title, pubDate, guid, selectedGuid, onSelected } = props;
+  const { title, pubDate, guid, selectedGuid, onSelected, content } = props;
 
   const hanldeClick = useCallback(() => {
     onSelected(guid);
+    contentStore.setConetnt(title, content);
   }, [guid]);
 
   const isSeleted = selectedGuid === guid;
@@ -120,6 +124,7 @@ export default function NewsList() {
               title={item.title}
               pubDate={item.pubDate}
               guid={item.guid}
+              content={item.content}
               selectedGuid={selectedGuid}
               onSelected={onItemSelect}
             />

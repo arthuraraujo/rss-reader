@@ -1,9 +1,5 @@
 @import '~antd/dist/antd.css';
 
-img {
-  width: 100%;
-}
-
 #app {
   height: 100vh;
 }
