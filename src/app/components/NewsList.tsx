@@ -1,39 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { List, Spin, Icon } from 'antd';
-import Parser from 'rss-parser';
 import moment from 'moment';
 import { createUseStyles } from 'react-jss';
+import { observer } from 'mobx-react-lite';
 import { Scrollbars } from 'react-custom-scrollbars';
 import contentStore from '../stores/content-store';
+import listSore, { NewsItem } from '../stores/list-store';
 
 export const renderThumbVerticalCustom = (props: any) => (
   <div className="rcs-vertical-thumb" {...props} />
 );
-
-function getThumbnail(content: string): string {
-  const regex = /<img[^>]+src="([^">]+)"/;
-
-  if (regex.test(content)) {
-    const res = regex.exec(content);
-    if (res && res.length > 1) {
-      return res[1];
-    }
-  }
-
-  return '';
-}
-
-interface NewsItem {
-  title: string;
-  contentSnippet: string;
-  link: string;
-  guid: string;
-  pubDate: string;
-  content: string;
-  thumbnail?: string;
-}
-
-const parser = new Parser();
 
 const useStyles = createUseStyles({
   loadingWrapper: {
@@ -46,7 +22,7 @@ const useStyles = createUseStyles({
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
-function NewsItem(props: {
+function NewsItemComponent(props: {
   title: string;
   pubDate: string;
   guid: string;
@@ -100,36 +76,19 @@ function NewsItem(props: {
   );
 }
 
-export default function NewsList() {
-  const [data, setData] = useState<NewsItem[]>([]);
+const NewsList = observer(() => {
   const [selectedGuid, setSelectedGuid] = useState('');
-  const [loading, setLoading] = useState(true);
   const classes = useStyles();
 
   useEffect(() => {
-    async function getData() {
-      let feed = await parser.parseURL('https://rsshub.app/9to5/mac');
-
-      console.log(feed.items);
-
-      const newData: NewsItem[] = (feed.items || []).map((item: NewsItem) => {
-        const thumbnail = getThumbnail(item.content);
-
-        return {
-          ...item,
-          thumbnail,
-        };
-      });
-
-      setData(newData);
-      setLoading(false);
-    }
-    getData();
-  }, []);
+    listSore.loadData();
+  }, [listSore.source]);
 
   const onItemSelect = useCallback(guid => {
     setSelectedGuid(guid);
   }, []);
+
+  const loading = listSore.data.length === 0;
 
   return (
     <Scrollbars
@@ -146,9 +105,9 @@ export default function NewsList() {
       {!loading && (
         <List
           itemLayout="horizontal"
-          dataSource={data}
+          dataSource={listSore.data}
           renderItem={(item: NewsItem) => (
-            <NewsItem
+            <NewsItemComponent
               title={item.title}
               pubDate={item.pubDate}
               guid={item.guid}
@@ -162,4 +121,6 @@ export default function NewsList() {
       )}
     </Scrollbars>
   );
-}
+});
+
+export default NewsList;
