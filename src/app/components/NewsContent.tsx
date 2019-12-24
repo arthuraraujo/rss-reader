@@ -16,8 +16,11 @@ const useStyles = createUseStyles({
     background: '#fff',
     minHeight: '100%',
     '& img': {
-      width: '100%',
+      maxWidth: '100%',
+      height: 'auto',
+      margin: '0 auto',
       marginBottom: 12,
+      display: 'block',
     },
   },
 });

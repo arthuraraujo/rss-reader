@@ -53,7 +53,7 @@ function NewsItemComponent(props: {
       style={{
         cursor: 'pointer',
         padding: 12,
-        background: isSeleted ? '#e8e8e8' : 'transparent',
+        background: isSeleted ? '#dcdcdc' : 'transparent',
       }}
       onClick={hanldeClick}
       extra={

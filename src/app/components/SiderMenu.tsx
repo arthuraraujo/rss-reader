@@ -17,32 +17,54 @@ const useStyles = createUseStyles({
   },
 });
 
-type RssSources = {
-  [key: string]: {
-    url: string;
-  };
-};
+interface DataSource {
+  key: string;
+  title: string;
+  url: string;
+}
 
-const RSS_SOURCES: RssSources = {
-  '9to5': {
+const DATA_SOURCES: DataSource[] = [
+  {
+    key: '9to5',
+    title: '9to5#mac',
     url: 'http://rsshub.app/9to5/mac',
   },
-  dgtle: {
+  {
+    key: 'dgtle',
+    title: '数字尾巴',
     url: 'http://rsshub.app/dgtle',
   },
-  '36kr': {
+  {
+    key: '36kr',
+    title: '36kr',
     url: 'http://rsshub.app/36kr/newsflashes',
   },
-  infoq: {
+  {
+    key: 'infoq',
+    title: 'InfoQ 推荐',
     url: 'http://rsshub.app/infoq/recommend',
   },
-  ifanrApp: {
-    url: ' http://rsshub.app/ifanr/app',
+  {
+    key: 'ifanr-app',
+    title: '爱范儿#App',
+    url: 'http://rsshub.app/ifanr/app',
   },
-  ifanrCoolbuy: {
-    url: ' http://rsshub.app/ifanr/coolbuy',
+  {
+    key: 'ifanr-coolbuy',
+    title: '爱范儿#玩物志',
+    url: 'http://rsshub.app/ifanr/coolbuy',
   },
-};
+  {
+    key: 'iDownloadBlog',
+    title: 'iDownloadBlog',
+    url: 'https://rsshub.app/iDownloadBlog',
+  },
+  {
+    key: 'juejin-frontend',
+    title: '掘金#前端',
+    url: 'https://rsshub.app/juejin/category/frontend',
+  },
+];
 
 export default function SiderMenu() {
   const classes = useStyles();
@@ -50,10 +72,11 @@ export default function SiderMenu() {
   const handleSelect = useCallback(parms => {
     const { key } = parms;
 
-    console.log('key,', key, RSS_SOURCES[key]);
-
-    if (RSS_SOURCES[key]) {
-      listStore.setNewSource(key, RSS_SOURCES[key].url);
+    const item = DATA_SOURCES.find(item => item.key === key);
+    if (item) {
+      listStore.setNewSource(item.key, item.url);
+    } else {
+      console.error('cannot find data-sources with key', key);
     }
   }, []);
 
@@ -64,35 +87,17 @@ export default function SiderMenu() {
       defaultSelectedKeys={['9to5']}
       mode="inline"
     >
-      <Menu.Item key="9to5">
-        <div className={classes.menuItem}>
-          <div>
-            <Icon type="desktop" />
-            <span>9to5</span>
+      {DATA_SOURCES.map(item => (
+        <Menu.Item key={item.key}>
+          <div className={classes.menuItem}>
+            <div>
+              <Icon type="desktop" />
+              <span>{item.title}</span>
+            </div>
+            {/* <div className={classes.badge}>12</div> */}
           </div>
-          <div className={classes.badge}>12</div>
-        </div>
-      </Menu.Item>
-      <Menu.Item key="dgtle">
-        <Icon type="desktop" />
-        <span>数字尾巴</span>
-      </Menu.Item>
-      <Menu.Item key="36kr">
-        <Icon type="desktop" />
-        <span>36kr</span>
-      </Menu.Item>
-      <Menu.Item key="infoq">
-        <Icon type="desktop" />
-        <span>InfoQ推荐</span>
-      </Menu.Item>
-      <Menu.Item key="ifanrApp">
-        <Icon type="desktop" />
-        <span>爱范儿 App</span>
-      </Menu.Item>
-      <Menu.Item key="ifanrCoolbuy">
-        <Icon type="desktop" />
-        <span>爱范儿 玩物志</span>
-      </Menu.Item>
+        </Menu.Item>
+      ))}
       <SubMenu
         key="sub1"
         title={
