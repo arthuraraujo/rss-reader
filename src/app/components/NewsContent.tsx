@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useLayoutEffect } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { observer } from 'mobx-react-lite';
 import { createUseStyles } from 'react-jss';
@@ -23,9 +23,16 @@ const useStyles = createUseStyles({
 
 const NewsContent = observer(() => {
   const classes = useStyles();
+  const scroller = useRef<Scrollbars>(null);
+
+  useLayoutEffect(() => {
+    if (scroller && scroller.current) {
+      scroller.current.scrollTop(0);
+    }
+  }, [contentStore.title]);
 
   return (
-    <Scrollbars renderThumbVertical={renderThumbVerticalCustom}>
+    <Scrollbars ref={scroller} renderThumbVertical={renderThumbVerticalCustom}>
       <div className={classes.content}>
         <h2>{contentStore.title}</h2>
         <div

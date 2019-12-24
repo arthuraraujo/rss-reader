@@ -10,6 +10,19 @@ export const renderThumbVerticalCustom = (props: any) => (
   <div className="rcs-vertical-thumb" {...props} />
 );
 
+function getThumbnail(content: string): string {
+  const regex = /<img[^>]+src="([^">]+)"/;
+
+  if (regex.test(content)) {
+    const res = regex.exec(content);
+    if (res && res.length > 1) {
+      return res[1];
+    }
+  }
+
+  return '';
+}
+
 interface NewsItem {
   title: string;
   contentSnippet: string;
@@ -17,6 +30,7 @@ interface NewsItem {
   guid: string;
   pubDate: string;
   content: string;
+  thumbnail?: string;
 }
 
 const parser = new Parser();
@@ -38,9 +52,18 @@ function NewsItem(props: {
   guid: string;
   selectedGuid: string;
   content: string;
+  thumbnail?: string;
   onSelected: Function;
 }) {
-  const { title, pubDate, guid, selectedGuid, onSelected, content } = props;
+  const {
+    title,
+    pubDate,
+    guid,
+    selectedGuid,
+    onSelected,
+    content,
+    thumbnail,
+  } = props;
 
   const hanldeClick = useCallback(() => {
     onSelected(guid);
@@ -58,16 +81,18 @@ function NewsItem(props: {
       }}
       onClick={hanldeClick}
       extra={
-        <img
-          style={{
-            width: 80,
-            borderRadius: 4,
-            height: '100%',
-            flexGrow: 0,
-          }}
-          alt="logo"
-          src="https://9to5mac.com/wp-content/uploads/sites/6/2019/12/Mac-Pro-Top-Features-slight-angle-jeff.jpg?quality=82&strip=all"
-        />
+        thumbnail && (
+          <img
+            style={{
+              width: 80,
+              borderRadius: 4,
+              height: '100%',
+              flexGrow: 0,
+            }}
+            alt="logo"
+            src={thumbnail}
+          />
+        )
       }
     >
       <List.Item.Meta title={title} description={moment(pubDate).fromNow()} />
@@ -76,7 +101,7 @@ function NewsItem(props: {
 }
 
 export default function NewsList() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<NewsItem[]>([]);
   const [selectedGuid, setSelectedGuid] = useState('');
   const [loading, setLoading] = useState(true);
   const classes = useStyles();
@@ -84,17 +109,20 @@ export default function NewsList() {
   useEffect(() => {
     async function getData() {
       let feed = await parser.parseURL('https://rsshub.app/9to5/mac');
-      console.log(feed.title);
 
       console.log(feed.items);
 
-      setData(feed.items);
+      const newData: NewsItem[] = (feed.items || []).map((item: NewsItem) => {
+        const thumbnail = getThumbnail(item.content);
 
+        return {
+          ...item,
+          thumbnail,
+        };
+      });
+
+      setData(newData);
       setLoading(false);
-
-      // feed.items?.forEach(item => {
-      //   console.log(item.title + ':' + item.link);
-      // });
     }
     getData();
   }, []);
@@ -125,6 +153,7 @@ export default function NewsList() {
               pubDate={item.pubDate}
               guid={item.guid}
               content={item.content}
+              thumbnail={item.thumbnail}
               selectedGuid={selectedGuid}
               onSelected={onItemSelect}
             />
