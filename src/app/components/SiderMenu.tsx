@@ -25,10 +25,22 @@ type RssSources = {
 
 const RSS_SOURCES: RssSources = {
   '9to5': {
-    url: 'https://rsshub.app/9to5/mac',
+    url: 'http://rsshub.app/9to5/mac',
   },
   dgtle: {
-    url: 'https://rsshub.app/dgtle',
+    url: 'http://rsshub.app/dgtle',
+  },
+  '36kr': {
+    url: 'http://rsshub.app/36kr/newsflashes',
+  },
+  infoq: {
+    url: 'http://rsshub.app/infoq/recommend',
+  },
+  ifanrApp: {
+    url: ' http://rsshub.app/ifanr/app',
+  },
+  ifanrCoolbuy: {
+    url: ' http://rsshub.app/ifanr/coolbuy',
   },
 };
 
@@ -64,6 +76,22 @@ export default function SiderMenu() {
       <Menu.Item key="dgtle">
         <Icon type="desktop" />
         <span>数字尾巴</span>
+      </Menu.Item>
+      <Menu.Item key="36kr">
+        <Icon type="desktop" />
+        <span>36kr</span>
+      </Menu.Item>
+      <Menu.Item key="infoq">
+        <Icon type="desktop" />
+        <span>InfoQ推荐</span>
+      </Menu.Item>
+      <Menu.Item key="ifanrApp">
+        <Icon type="desktop" />
+        <span>爱范儿 App</span>
+      </Menu.Item>
+      <Menu.Item key="ifanrCoolbuy">
+        <Icon type="desktop" />
+        <span>爱范儿 玩物志</span>
       </Menu.Item>
       <SubMenu
         key="sub1"

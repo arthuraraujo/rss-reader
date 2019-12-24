@@ -61,6 +61,7 @@ function NewsItemComponent(props: {
           <img
             style={{
               width: 80,
+              marginLeft: 5,
               borderRadius: 4,
               height: '100%',
               flexGrow: 0,

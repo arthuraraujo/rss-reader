@@ -11,9 +11,10 @@ export const renderThumbVerticalCustom = (props: any) => (
 
 const useStyles = createUseStyles({
   content: {
-    padding: 24,
-    paddingTop: 32,
+    padding: 28,
+    paddingTop: 36,
     background: '#fff',
+    minHeight: '100%',
     '& img': {
       width: '100%',
       marginBottom: 12,
