@@ -37,8 +37,15 @@ class ListStore {
   data: NewsItem[] = [];
 
   @action
+  setNewSource(source: string, url: string) {
+    this.source = source;
+    this.url = url;
+    this.data = [];
+  }
+
+  @action
   async loadData() {
-    let feed = await parser.parseURL('https://rsshub.app/9to5/mac');
+    let feed = await parser.parseURL(this.url);
 
     console.log(feed.items);
 

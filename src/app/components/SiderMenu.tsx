@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Menu, Icon } from 'antd';
 import { createUseStyles } from 'react-jss';
+import listStore from '../stores/list-store';
 
 const { SubMenu } = Menu;
 
@@ -16,12 +17,42 @@ const useStyles = createUseStyles({
   },
 });
 
+type RssSources = {
+  [key: string]: {
+    url: string;
+  };
+};
+
+const RSS_SOURCES: RssSources = {
+  '9to5': {
+    url: 'https://rsshub.app/9to5/mac',
+  },
+  dgtle: {
+    url: 'https://rsshub.app/dgtle',
+  },
+};
+
 export default function SiderMenu() {
   const classes = useStyles();
 
+  const handleSelect = useCallback(parms => {
+    const { key } = parms;
+
+    console.log('key,', key, RSS_SOURCES[key]);
+
+    if (RSS_SOURCES[key]) {
+      listStore.setNewSource(key, RSS_SOURCES[key].url);
+    }
+  }, []);
+
   return (
-    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-      <Menu.Item key="1">
+    <Menu
+      onSelect={handleSelect}
+      theme="dark"
+      defaultSelectedKeys={['9to5']}
+      mode="inline"
+    >
+      <Menu.Item key="9to5">
         <div className={classes.menuItem}>
           <div>
             <Icon type="desktop" />
@@ -30,9 +61,9 @@ export default function SiderMenu() {
           <div className={classes.badge}>12</div>
         </div>
       </Menu.Item>
-      <Menu.Item key="2">
+      <Menu.Item key="dgtle">
         <Icon type="desktop" />
-        <span>Option 2</span>
+        <span>数字尾巴</span>
       </Menu.Item>
       <SubMenu
         key="sub1"
