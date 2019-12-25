@@ -30,9 +30,19 @@ const DATA_SOURCES: DataSource[] = [
     url: 'http://rsshub.app/9to5/mac',
   },
   {
+    key: 'zhihu',
+    title: '知乎',
+    url: 'https://zhihu.com/rss',
+  },
+  {
     key: 'dgtle',
     title: '数字尾巴',
-    url: 'http://rsshub.app/dgtle',
+    url: 'http://www.dgtle.com/rss/dgtle.xml',
+  },
+  {
+    key: 'sspai',
+    title: '少数派',
+    url: 'http://sspai.com/feed',
   },
   {
     key: '36kr',
@@ -54,11 +64,11 @@ const DATA_SOURCES: DataSource[] = [
     title: '爱范儿#玩物志',
     url: 'http://rsshub.app/ifanr/coolbuy',
   },
-  {
-    key: 'iDownloadBlog',
-    title: 'iDownloadBlog',
-    url: 'https://rsshub.app/iDownloadBlog',
-  },
+  // {
+  //   key: 'iDownloadBlog',
+  //   title: 'iDownloadBlog',
+  //   url: 'https://rsshub.app/iDownloadBlog',
+  // },
   {
     key: 'juejin-frontend',
     title: '掘金#前端',
@@ -79,11 +89,11 @@ const DATA_SOURCES: DataSource[] = [
     title: '异次元',
     url: 'https://rsshub.app/iplay/home',
   },
-  {
-    key: 'gouhuo-switch',
-    title: '篝火营地#switch',
-    url: 'https://rsshub.app/gouhuo/news/switch',
-  },
+  // {
+  //   key: 'gouhuo-switch',
+  //   title: '篝火营地#switch',
+  //   url: 'https://rsshub.app/gouhuo/news/switch',
+  // },
 ];
 
 export default function SiderMenu() {
