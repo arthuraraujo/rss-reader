@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { observer } from 'mobx-react-lite';
 import { createUseStyles } from 'react-jss';
@@ -11,10 +11,11 @@ export const renderThumbVerticalCustom = (props: any) => (
 
 const useStyles = createUseStyles({
   content: {
-    padding: 28,
-    paddingTop: 36,
-    background: '#fff',
     minHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    background: '#fff',
     '& img': {
       maxWidth: '100%',
       height: 'auto',
@@ -22,6 +23,18 @@ const useStyles = createUseStyles({
       marginBottom: 12,
       display: 'block',
     },
+    '& iframe': {
+      width: '100%',
+    },
+    '& p': {
+      lineHeight: 2,
+    },
+  },
+  fixedContent: {
+    marginBottom: '1.5rem',
+    padding: '2rem',
+    maxWidth: 960,
+    width: '100%',
   },
 });
 
@@ -38,12 +51,14 @@ const NewsContent = observer(() => {
   return (
     <Scrollbars ref={scroller} renderThumbVertical={renderThumbVerticalCustom}>
       <div className={classes.content}>
-        <h2>{contentStore.title}</h2>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: contentStore.content,
-          }}
-        />
+        <div className={classes.fixedContent}>
+          <h2>{contentStore.title}</h2>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: contentStore.content,
+            }}
+          />
+        </div>
       </div>
     </Scrollbars>
   );
