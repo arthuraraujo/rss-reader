@@ -64,6 +64,26 @@ const DATA_SOURCES: DataSource[] = [
     title: '掘金#前端',
     url: 'https://rsshub.app/juejin/category/frontend',
   },
+  {
+    key: 'readhub-topic',
+    title: 'Readhub#热门话题',
+    url: 'https://rsshub.app/readhub/category/topic',
+  },
+  {
+    key: 'qdaily',
+    title: '好奇怪',
+    url: 'https://rsshub.app/qdaily/notch/posts',
+  },
+  {
+    key: 'iplay',
+    title: '异次元',
+    url: 'https://rsshub.app/iplay/home',
+  },
+  {
+    key: 'gouhuo-switch',
+    title: '篝火营地#switch',
+    url: 'https://rsshub.app/gouhuo/news/switch',
+  },
 ];
 
 export default function SiderMenu() {
@@ -98,7 +118,7 @@ export default function SiderMenu() {
           </div>
         </Menu.Item>
       ))}
-      <SubMenu
+      {/* <SubMenu
         key="sub1"
         title={
           <span>
@@ -122,11 +142,7 @@ export default function SiderMenu() {
       >
         <Menu.Item key="6">Team 1</Menu.Item>
         <Menu.Item key="8">Team 2</Menu.Item>
-      </SubMenu>
-      <Menu.Item key="9">
-        <Icon type="file" />
-        <span>File</span>
-      </Menu.Item>
+      </SubMenu> */}
     </Menu>
   );
 }
