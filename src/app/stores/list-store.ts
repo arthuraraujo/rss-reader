@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import Parser from 'rss-parser';
-
+const pangu = require('pangu');
 const parser = new Parser();
 
 function getThumbnail(content: string): string {
@@ -54,6 +54,8 @@ class ListStore {
 
       return {
         ...item,
+        title: pangu.spacing(item.title),
+        // content: pangu.spacing(item.content),
         thumbnail,
       };
     });

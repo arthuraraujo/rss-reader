@@ -2,8 +2,9 @@ import React, { useRef, useLayoutEffect } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { observer } from 'mobx-react-lite';
 import { createUseStyles } from 'react-jss';
-
 import contentStore from '../stores/content-store';
+
+const pangu = require('pangu');
 
 export const renderThumbVerticalCustom = (props: any) => (
   <div className="rcs-vertical-thumb" {...props} />
@@ -46,11 +47,14 @@ const NewsContent = observer(() => {
     if (scroller && scroller.current) {
       scroller.current.scrollTop(0);
     }
+
+    pangu.spacingElementById('rss-content');
+    pangu.autoSpacingPage();
   }, [contentStore.title]);
 
   return (
     <Scrollbars ref={scroller} renderThumbVertical={renderThumbVerticalCustom}>
-      <div className={classes.content}>
+      <div id="rss-content" className={classes.content}>
         <div className={classes.fixedContent}>
           <h2>{contentStore.title}</h2>
           <div
