@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
   fixedContent: {
     marginBottom: '1.5rem',
     padding: '2rem',
-    maxWidth: 960,
+    maxWidth: 980,
     width: '100%',
   },
 });

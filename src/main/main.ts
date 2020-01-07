@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, session } from 'electron';
 
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -60,6 +60,21 @@ app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
+    // Modify the user agent for all requests to the following urls.
+    //s1.dgtle.com/dgtle_img/article/2019/12/27/98796201912271422127325_1800_500.jpeg?imageView2/2/w/600
+    // const filter = {
+    //   urls: ['*://*.s1.dgtle.com.com/*'],
+    // };
+
+    // session.defaultSession.webRequest.onBeforeSendHeaders(
+    //   filter,
+    //   (details, callback) => {
+    //     details.requestHeaders['Referer'] = 'http://s1.dgtle.com';
+    //     callback({
+    //       requestHeaders: details.requestHeaders,
+    //     });
+    //   },
+    // );
     createWindow();
   }
 });
