@@ -26,6 +26,7 @@ function NewsItemComponent(props: {
   title: string;
   pubDate: string;
   guid: string;
+  link: string;
   selectedGuid: string;
   content: string;
   thumbnail?: string;
@@ -39,14 +40,15 @@ function NewsItemComponent(props: {
     onSelected,
     content,
     thumbnail,
+    link,
   } = props;
 
   const hanldeClick = useCallback(() => {
-    onSelected(guid);
+    onSelected(guid || link);
     contentStore.setConetnt(title, content);
-  }, [guid]);
+  }, [guid, link]);
 
-  const isSeleted = selectedGuid === guid;
+  const isSeleted = selectedGuid === guid || selectedGuid === link;
 
   return (
     <List.Item
@@ -86,6 +88,7 @@ const NewsList = observer(() => {
   }, [listSore.source]);
 
   const onItemSelect = useCallback(guid => {
+    console.log('update guid', selectedGuid);
     setSelectedGuid(guid);
   }, []);
 
@@ -112,6 +115,7 @@ const NewsList = observer(() => {
               title={item.title}
               pubDate={item.pubDate}
               guid={item.guid}
+              link={item.link}
               content={item.content}
               thumbnail={item.thumbnail}
               selectedGuid={selectedGuid}
