@@ -1,4 +1,6 @@
 import { app, BrowserWindow, session } from 'electron';
+import handleContextMenu from './handleContextMenu';
+import handleNewWindow from './handleNewWindow';
 
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -27,6 +29,9 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+  mainWindow.webContents.on('new-window', handleNewWindow);
+  mainWindow.webContents.on('context-menu', handleContextMenu);
 
   // Open the DevTools.
   if (process.env.NODE_ENV === 'development') {
