@@ -45,7 +45,7 @@ function NewsItemComponent(props: {
 
   const hanldeClick = useCallback(() => {
     onSelected(guid || link);
-    contentStore.setConetnt(title, content);
+    contentStore.setConetnt(title, content, link);
   }, [guid, link]);
 
   const isSeleted = selectedGuid === guid || selectedGuid === link;

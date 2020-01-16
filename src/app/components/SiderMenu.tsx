@@ -55,15 +55,40 @@ const DATA_SOURCES: DataSource[] = [
     url: 'http://rsshub.app/infoq/recommend',
   },
   {
+    key: 'engadget-cn',
+    title: '瘾科技',
+    url: 'https://rsshub.app/engadget-cn',
+  },
+  {
+    key: 'shuaping-latest',
+    title: '刷屏#最新',
+    url: 'https://rsshub.app/weseepro/newest',
+  },
+  {
+    key: 'whalegogo-home',
+    title: '鲸跃汽车',
+    url: 'https://rsshub.app/whalegogo/home',
+  },
+  {
+    key: 'cnbeta',
+    title: 'cnBeta',
+    url: 'https://rsshub.app/cnbeta',
+  },
+  {
+    key: 'donews',
+    title: 'doNews',
+    url: 'https://rsshub.app/donews',
+  },
+  {
     key: 'ifanr-app',
     title: '爱范儿#App',
     url: 'http://rsshub.app/ifanr/app',
   },
-  {
-    key: 'ifanr-coolbuy',
-    title: '爱范儿#玩物志',
-    url: 'http://rsshub.app/ifanr/coolbuy',
-  },
+  // {
+  //   key: 'ifanr-coolbuy',
+  //   title: '爱范儿#玩物志',
+  //   url: 'http://rsshub.app/ifanr/coolbuy',
+  // },
   // {
   //   key: 'iDownloadBlog',
   //   title: 'iDownloadBlog',
@@ -79,16 +104,16 @@ const DATA_SOURCES: DataSource[] = [
     title: 'Readhub#热门话题',
     url: 'https://rsshub.app/readhub/category/topic',
   },
-  {
-    key: 'qdaily',
-    title: '好奇怪',
-    url: 'https://rsshub.app/qdaily/notch/posts',
-  },
-  {
-    key: 'iplay',
-    title: '异次元',
-    url: 'https://rsshub.app/iplay/home',
-  },
+  // {
+  //   key: 'qdaily',
+  //   title: '好奇怪',
+  //   url: 'https://rsshub.app/qdaily/notch/posts',
+  // },
+  // {
+  //   key: 'iplay',
+  //   title: '异次元',
+  //   url: 'https://rsshub.app/iplay/home',
+  // },
   // {
   //   key: 'gouhuo-switch',
   //   title: '篝火营地#switch',

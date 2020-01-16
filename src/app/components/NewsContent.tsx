@@ -1,7 +1,9 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, useCallback } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { observer } from 'mobx-react-lite';
 import { createUseStyles } from 'react-jss';
+import { Icon } from 'antd';
+import { shell } from 'electron';
 import contentStore from '../stores/content-store';
 
 const pangu = require('pangu');
@@ -29,6 +31,11 @@ const useStyles = createUseStyles({
     },
     '& p': {
       lineHeight: 2,
+      textRendering: 'optimizeLegibility',
+    },
+    '& h1': {
+      fontSize: '2rem',
+      textRendering: 'optimizeLegibility',
     },
   },
   fixedContent: {
@@ -36,6 +43,26 @@ const useStyles = createUseStyles({
     padding: '2rem',
     maxWidth: 980,
     width: '100%',
+  },
+  topBar: {
+    height: 51,
+    background: '#ffffff',
+    borderBottom: '1px solid #efefef',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    WebkitAppRegion: 'drag',
+    '& i': {
+      WebkitAppRegion: 'no-drag',
+      opacity: 0.54,
+      padding: '0 15px',
+    },
+  },
+  wrapper: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
   },
 });
 
@@ -52,19 +79,36 @@ const NewsContent = observer(() => {
     pangu.autoSpacingPage();
   }, [contentStore.title]);
 
+  const openInBrwoser = useCallback(() => {
+    shell.openExternal(contentStore.link);
+  }, [contentStore.link]);
+
   return (
-    <Scrollbars ref={scroller} renderThumbVertical={renderThumbVerticalCustom}>
-      <div id="rss-content" className={classes.content}>
-        <div className={classes.fixedContent}>
-          <h2>{contentStore.title}</h2>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: contentStore.content,
-            }}
-          />
-        </div>
+    <div className={classes.wrapper}>
+      <div className={classes.topBar}>
+        <Icon type="heart" />
+        <Icon type="share-alt" />
+        <Icon type="qrcode" />
+        <Icon onClick={openInBrwoser} type="compass" />
+        <Icon type="more" />
       </div>
-    </Scrollbars>
+
+      <Scrollbars
+        ref={scroller}
+        renderThumbVertical={renderThumbVerticalCustom}
+      >
+        <div id="rss-content" className={classes.content}>
+          <div className={classes.fixedContent}>
+            <h1>{contentStore.title}</h1>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: contentStore.content,
+              }}
+            />
+          </div>
+        </div>
+      </Scrollbars>
+    </div>
   );
 });
 
