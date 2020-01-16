@@ -60,16 +60,17 @@ function NewsItemComponent(props: {
       onClick={hanldeClick}
       extra={
         thumbnail && (
-          <img
+          <div
             style={{
               width: 80,
+              height: 80,
+              backgroundImage: `url(${thumbnail})`,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
               marginLeft: 5,
-              borderRadius: 4,
-              height: '100%',
+              borderRadius: 6,
               flexGrow: 0,
             }}
-            alt="logo"
-            src={thumbnail}
           />
         )
       }
